@@ -28,7 +28,28 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
-
+<?php
+    $globalMenus = [['label' => 'Home', 'url' => ['/site/index']]];
+    $unauthenticatedMenus = [
+        ['label' => 'Login', 'url' => ['/user/login']],
+        ['label' => 'Registro', 'url' => ['/user/registro']]
+    ];
+    $authenticatedMenus = [];
+    $menuItems = [...$globalMenus];
+    if(Yii::$app->user->isGuest) {
+        $menuItems = [...$menuItems, ...$unauthenticatedMenus];
+    } else {
+        $logoutForm = '<li class="nav-item">'
+            . Html::beginForm(['/site/logout'])
+            . Html::submitButton(
+                'Logout (' . Yii::$app->user->identity->email . ')',
+                ['class' => 'nav-link btn btn-link logout']
+            )
+            . Html::endForm()
+        . '</li>';
+        $menuItems = [...$menuItems, ...$authenticatedMenus, $logoutForm];
+    }
+?>
 <header id="header">
     <?php
     NavBar::begin([
@@ -38,20 +59,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Registro', 'url' => ['/user/registro']],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/user/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->email . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
+        'items' => $menuItems
     ]);
     NavBar::end();
     ?>
