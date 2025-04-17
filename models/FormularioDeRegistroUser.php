@@ -4,6 +4,7 @@ namespace app\models;
 use Yii;
 
 use yii\base\Model;
+use app\models\User;
 
 class FormularioDeRegistroUser extends Model
 {
@@ -17,6 +18,17 @@ class FormularioDeRegistroUser extends Model
             ["email", "email"],
             [["password", "confirmPassword"], "string", "min" => 6, "max" => 40],
             ["password", "compare", "compareAttribute" => "confirmPassword"],
+            ["email", "unique", "targetAttribute" => "email", "targetClass" => User::class, "message" => "Email não está disponível!"]
         ];
+    }
+    public function beforeValidate()
+    {
+        if (parent::beforeValidate()) {
+            if ($this->email) {
+                $this->email = strtolower($this->email);
+            }
+            return true;
+        }
+        return false;
     }
 }
