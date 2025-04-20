@@ -17,6 +17,8 @@ Esse comando irá iniciar três containers:
 - **Nginx**
 - **PostgreSQL**
 
+Após configurar e subir os containers, vocé pode acessar o projeto em http://localhost:8080.
+
 ## ⚙️ Configuração
 
 Antes de rodar o projeto, você precisa criar um arquivo `.env` na raiz com as seguintes variáveis:
