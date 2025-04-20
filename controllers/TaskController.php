@@ -20,10 +20,11 @@ class TaskController extends \yii\web\Controller
         $form = new FormPutTask();
         if($form->load(Yii::$app->request->post()) && $form->validate()) {
             $task = new Task();
-            $task->setAttributes($form->getAttributes(), []);
+            $task->setAttributes($form->getAttributes(except: ["id"]), false);
             $task->user_id = intval($user->id);
+            unset($task->id);
             $task->due_date = $form->getAttributes()["due_date"];
-            $task->save();
+            $task->insert();
         }
         return $this->redirect("/index?r=task/index");
     }
