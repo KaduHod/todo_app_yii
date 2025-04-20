@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use app\models\User;
 
-class FormularioDeRegistroUser extends Model
+class FormSignUp extends Model
 {
     public $name;
     public $email;

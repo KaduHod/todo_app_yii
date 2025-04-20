@@ -1,16 +1,15 @@
 <?php
 namespace app\controllers;
+
 use Yii;
 use app\models\User;
-use app\models\FormularioDeRegistroUser;
-use app\models\FormularioDeLogin;
+use app\models\FormSignIn;
+use app\models\FormSignUp;
 
 class UserController extends \yii\web\Controller
 {
-    public function actionIndex() {
-    }
-    public function actionRegistro() {
-        $formulario = new FormularioDeRegistroUser();
+    public function actionSignup() {
+        $formulario = new FormSignUp();
         $user = new User();
         if(Yii::$app->request->post() && $formulario->load(Yii::$app->request->post()) && $formulario->validate()) {
             $data = $formulario->toArray();
@@ -19,14 +18,14 @@ class UserController extends \yii\web\Controller
             $data["email"] = strtolower($data["email"]);
             $user->setAttributes($data, []);
             if(!$user->save()) {
-                return $this->render("registro", ["model" => $formulario]);
+                return $this->render("signup", ["model" => $formulario]);
             }
-            return $this->redirect("/login", 302);
+            return $this->redirect("/signin", 302);
         }
-        return $this->render("registro", ["model" => $formulario]);
+        return $this->render("signup", ["model" => $formulario]);
     }
-    public function actionLogin() {
-        $form = new FormularioDeLogin();
+    public function actionSignin() {
+        $form = new FormSignIn();
         if($form->load(Yii::$app->request->post()) && $form->validate()) {
             $user = User::findOne(["email" => strtolower($form->email)]);
             if($user && Yii::$app->getSecurity()->validatePassword($form->password, $user->password)) {
@@ -34,7 +33,7 @@ class UserController extends \yii\web\Controller
                 return $this->redirect("/", 302);
             }
         }
-        return $this->render("login", ["model" => $form]);
+        return $this->render("signin", ["model" => $form]);
     }
 }
 

@@ -3,7 +3,7 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 
-class FormularioDeLogin extends Model
+class FormSignIn extends Model
 {
     public $email;
     public $password;

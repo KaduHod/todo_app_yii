@@ -31,10 +31,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <?php
     $globalMenus = [['label' => 'Home', 'url' => ['/site/index']]];
     $unauthenticatedMenus = [
-        ['label' => 'Login', 'url' => ['/user/login']],
-        ['label' => 'Registro', 'url' => ['/user/registro']]
+        ['label' => 'Sign in', 'url' => ['/user/signin']],
+        ['label' => 'Sign up', 'url' => ['/user/signup']]
     ];
-    $authenticatedMenus = [];
+    $authenticatedMenus = [
+        ["label" => "Tasks", "url" => ["/task/index"]],
+    ];
     $menuItems = [...$globalMenus];
     if(Yii::$app->user->isGuest) {
         $menuItems = [...$menuItems, ...$unauthenticatedMenus];

@@ -3,7 +3,7 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 
-class FormularioDeTask extends Model
+class FormPutTask extends Model
 {
     public $title;
     public $description;
