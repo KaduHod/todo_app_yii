@@ -1,9 +1,36 @@
-version: '2'
 services:
-  php:
-    image: yiisoftware/yii2-php:7.4-apache
+  yii:
+    build: .
     volumes:
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      - ./:/app:delegated
+      - ./:/var/www/html/todo
     ports:
-      - '8000:80'
+      - "8080:80"
+    depends_on:
+      - postgres
+    hostname: yii-app
+    container_name: yii-app
+    networks:
+      - todo_network
+
+  postgres:
+    image: postgres
+    container_name: yii-db
+    hostname: yii-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qN6m39doREM4O7YBBy
+      POSTGRES_DB: postgres  # Nome do banco de dados, pode ser alterado conforme necessário
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./infra/database/dump.sql:/docker-entrypoint-initdb.d/dump.sql  # Mapeia o dump para o diretório de inicialização
+    networks:
+      - todo_network
+
+volumes:
+  pgdata:
+
+networks:
+  todo_network:
+    driver: bridge

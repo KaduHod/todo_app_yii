@@ -1,10 +1,11 @@
 <?php
 
+$dsn = "pgsql:host=".$_ENV['DB_HOST'].";dbname=".$_ENV['DB_NAME'];
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'pgsql:host=localhost;dbname=postgres',
-    'username' => 'postgres',
-    'password' => 'qN6m39doREM4O7YBBy',
+    'dsn' => $dsn,
+    'username' => $_ENV["DB_NAME"],
+    'password' => $_ENV["DB_PWD"],
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
