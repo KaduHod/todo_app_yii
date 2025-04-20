@@ -8,6 +8,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, "password")->passwordInput() ?>
     <?= $form->field($model, "confirmPassword")->passwordInput() ?>
     <div class="form-group">
-        <?= Html::submitButton("Save", ["class" => "btn btn-primary"]) ?>
+        <?= Html::submitButton("Signup", ["class" => "btn btn-primary"]) ?>
     </div>
 <?php ActiveForm::end(); ?>
+<?= Html::a("Signin", ["user/signin"]) ?>

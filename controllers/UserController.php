@@ -30,7 +30,7 @@ class UserController extends \yii\web\Controller
             $user = User::findOne(["email" => strtolower($form->email)]);
             if($user && Yii::$app->getSecurity()->validatePassword($form->password, $user->password)) {
                 Yii::$app->user->login($user, 3600*24*30);
-                return $this->redirect("/", 302);
+                return $this->redirect(["task/index"]);
             }
         }
         return $this->render("signin", ["model" => $form]);

@@ -29,7 +29,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 <?php
-    $globalMenus = [['label' => 'Home', 'url' => ['/site/index']]];
+    $globalMenus = [];
     $unauthenticatedMenus = [
         ['label' => 'Sign in', 'url' => ['/user/signin']],
         ['label' => 'Sign up', 'url' => ['/user/signup']]
@@ -55,8 +55,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <header id="header">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
     echo Nav::widget([

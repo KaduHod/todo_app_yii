@@ -33,7 +33,7 @@ class TaskController extends \yii\web\Controller
             $task->insert();
             $this->updateSessionTasks();
         }
-        return $this->redirect("/index?r=task/index");
+        return $this->redirect(["task/index"]);
     }
     public function actionUpdate($id) {
         $task = Task::findOne($id);
@@ -44,7 +44,7 @@ class TaskController extends \yii\web\Controller
             $task->setAttributes($data, false);
             $task->update();
             $this->updateSessionTasks();
-            return $this->render("/task/index", ["model" => $form]);
+            return $this->redirect(["task/index"]);
         }
         $form->setAttributes($task->getAttributes());
         return $this->render("update", ["model" => $form, "task" => $task]);
@@ -53,7 +53,7 @@ class TaskController extends \yii\web\Controller
         $task = Task::findOne($id);
         $task->delete();
         $this->updateSessionTasks();
-        return $this->redirect("/index?r=task/index");
+        return $this->redirect(["task/index"]);
     }
 }
 ?>
