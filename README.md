@@ -31,7 +31,7 @@ Substitua `{SUA_SENHA}` pela senha desejada para o banco de dados PostgreSQL.
 
 ## 👤 Usuário e Autenticação
 
-O sistema cria um **usuário padrão** automaticamente. Com ele, é possível acessar o sistema e gerenciar suas tarefas.
+Crie um **usuário**!. Com ele, é possível acessar o sistema e gerenciar suas tarefas.
 
 ## ✅ Funcionalidades
 
