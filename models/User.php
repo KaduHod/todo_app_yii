@@ -8,6 +8,7 @@ use yii\behaviors\TimestampBehavior;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $auth_key;
     public static function tableName() {
         return "users";
     }
@@ -94,7 +95,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return $this->auth_key === $authKey;
     }
 
     /**
