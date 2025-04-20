@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+$tasks = Yii::$app->session->get("tasks");
 ?>
 
 <div class="task-list">

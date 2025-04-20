@@ -10,10 +10,16 @@ class TaskController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $user = Yii::$app->user->identity;
-        $userTasks = Task::find()->where(["user_id" => $user->id])->all();
+        $userTasks = Yii::$app->session->get("tasks");
+        if(!$userTasks) {
+            $this->updateSessionTasks();
+        }
         $form = new FormPutTask();
-        return $this->render("index", ["model" => $form, "tasks" => $userTasks]);
+        return $this->render("index", ["model" => $form]);
+    }
+    private function updateSessionTasks() {
+        $userTasks = Task::find()->where(["user_id" => Yii::$app->user->identity->id])->all();
+        Yii::$app->session->set("tasks", $userTasks);
     }
     public function actionCreate() {
         $user = Yii::$app->user->identity;
@@ -25,6 +31,7 @@ class TaskController extends \yii\web\Controller
             unset($task->id);
             $task->due_date = $form->getAttributes()["due_date"];
             $task->insert();
+            $this->updateSessionTasks();
         }
         return $this->redirect("/index?r=task/index");
     }
@@ -35,10 +42,9 @@ class TaskController extends \yii\web\Controller
             $data = $form->getAttributes();
             unset($data['id'], $data['user_id'], $data['created_at'], $data['updated_at']);
             $task->setAttributes($data, false);
-            $user = Yii::$app->user->identity;
             $task->update();
-            $userTasks = Task::find()->where(["user_id" => $user->id])->all();
-            return $this->render("/task/index", ["model" => $form, "tasks" => $userTasks]);
+            $this->updateSessionTasks();
+            return $this->render("/task/index", ["model" => $form]);
         }
         $form->setAttributes($task->getAttributes());
         return $this->render("update", ["model" => $form, "task" => $task]);
@@ -46,6 +52,7 @@ class TaskController extends \yii\web\Controller
     public function actionDelete($id) {
         $task = Task::findOne($id);
         $task->delete();
+        $this->updateSessionTasks();
         return $this->redirect("/index?r=task/index");
     }
 }
